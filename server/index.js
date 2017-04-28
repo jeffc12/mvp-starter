@@ -15,6 +15,8 @@ app.use(express.static(__dirname + '/../react-client/dist'));
 // app.use(express.static(__dirname + '/../node_modules'));
 
 app.get('/items', function (req, res) {
+
+
   items.selectAll(function(err, data) {
     if(err) {
       res.sendStatus(500);
