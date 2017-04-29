@@ -68,11 +68,13 @@ class App extends React.Component {
     },
   })
 
+
     return (
     <div style={styles.body0}>
       <h1 style={styles.title}>NAME OF THIS APP</h1>
       <h3>Search Hashtag</h3>
       <Search onSearch={this.Search.bind(this)}/>
+
       <List items={this.state.items}/>
 
 

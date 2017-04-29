@@ -54,8 +54,9 @@ app.get('/items/drop', function(req, res) {
   console.log('in drop');
   items.remove({}, function(err) {
    console.log('collection removed')
+   res.end();
 });
-res.end();
+
 })
 
 app.get('/items', function (req, res) {

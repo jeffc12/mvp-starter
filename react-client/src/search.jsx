@@ -30,7 +30,7 @@ class Search extends React.Component {
     })
     .done(function(data){
       console.log('RESET COMPLETE');
-      
+
     })
     .fail(function(err) {
       console.error('DATA BASE DID NOT REST');
@@ -38,7 +38,7 @@ class Search extends React.Component {
   }
 
   render () {
-
+    console.log(this.state.current);
 
     return (
     <div>
