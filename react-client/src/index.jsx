@@ -9,12 +9,15 @@ class App extends React.Component {
     this.state = {
       items: []
     }
+  var componentDidMount = this.componentDidMount.bind(this);
   }
 
   componentDidMount() {
     $.ajax({
       url: '/items',
+      type: 'GET',
       success: (data) => {
+        console.log('GET SUCCESFUL');
         this.setState({
           items: data
         })
@@ -27,13 +30,15 @@ class App extends React.Component {
 
 
   Search(input) {
+    var outside = this;
     $.ajax({
     url: '/items/import',
     type: 'POST',
     contentType: 'application/JSON',
-    data: JSON.stringify(username: input)
+    data: JSON.stringify({username: 'hi'})
     })
     .done(function(data) {
+      outside.componentDidMount();
     console.log('POST Successful', data);
     })
     .fail(function(err) {
@@ -41,14 +46,14 @@ class App extends React.Component {
     })
   }
 
-  
+
   render () {
     return (<div>
       <h1>Item List</h1>
       <List items={this.state.items}/>
-      <h1>Search User</h1>
+      <h2>Search User</h2>
       <input type='text'></input>
-      <button>Enter</button>
+      <button onClick={this.Search.bind(this)}>Enter</button>
 
     </div>)
   }
