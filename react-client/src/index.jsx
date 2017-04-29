@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import List from './components/List.jsx';
 import Search from './search.jsx';
-import reactCSS from 'reactcss'
+import reactCSS from 'reactcss';
 
 class App extends React.Component {
   constructor(props) {
@@ -74,6 +74,7 @@ class App extends React.Component {
       <h3>Search Hashtag</h3>
       <Search onSearch={this.Search.bind(this)}/>
       <List items={this.state.items}/>
+
 
 
     </div>

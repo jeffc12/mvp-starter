@@ -22,19 +22,11 @@ app.post('/items/import', function(req,res) {
   var igAPI = new ig(accessToken);
 
   igAPI.userSelfMedia().then(function(result) {
-    // console.log(result.data[0]); // user info
+
     console.log(result.limit); // api limit
     console.log(result.remaining) // api request remaining
 
-
-
     for(var i=0; i<result.data.length;i++) {
-
-      // console.log(result.data[i].user.profile_picture);
-      // console.log(result.data[i].created_time);
-      // console.log(result.data[i].likes.count);
-      // console.log(result.data[i]['filter']);
-
 
       var newAdd = new items({
         profilePicture: result.data[i].user.profile_picture,
@@ -58,7 +50,13 @@ app.post('/items/import', function(req,res) {
   })
 })
 
-
+app.get('/items/drop', function(req, res) {
+  console.log('in drop');
+  items.remove({}, function(err) {
+   console.log('collection removed')
+});
+res.end();
+})
 
 app.get('/items', function (req, res) {
   items.find({},(function(err, data) {
