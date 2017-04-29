@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import List from './components/List.jsx';
+import Search from './search.jsx';
+import reactCSS from 'reactcss'
 
 class App extends React.Component {
   constructor(props) {
@@ -31,11 +33,12 @@ class App extends React.Component {
 
   Search(input) {
     var outside = this;
+    console.log(input);
     $.ajax({
     url: '/items/import',
     type: 'POST',
     contentType: 'application/JSON',
-    data: JSON.stringify({username: 'hi'})
+    data: JSON.stringify({username: input})
     })
     .done(function(data) {
       outside.componentDidMount();
@@ -48,14 +51,33 @@ class App extends React.Component {
 
 
   render () {
-    return (<div>
-      <h1>Item List</h1>
-      <List items={this.state.items}/>
-      <h2>Search User</h2>
-      <input type='text'></input>
-      <button onClick={this.Search.bind(this)}>Enter</button>
+    const styles = reactCSS({
+    'default': {
+      body0: {
+        background: '#F0FFF0',
+        font: 'futura',
+        boxShadow: '0 2px 4px rgba(0,0,0,.15)',
 
-    </div>)
+      },
+      title: {
+        fontSize: '2.8rem',
+        justifyContent: 'center',
+        alignItems: 'center',
+
+      },
+    },
+  })
+
+    return (
+    <div style={styles.body0}>
+      <h1 style={styles.title}>NAME OF THIS APP</h1>
+      <h3>Search Hashtag</h3>
+      <Search onSearch={this.Search.bind(this)}/>
+      <List items={this.state.items}/>
+
+
+    </div>
+  )
   }
 }
 

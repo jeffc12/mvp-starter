@@ -12,20 +12,13 @@ db.once('open', function() {
 });
 
 var itemSchema = mongoose.Schema({
-  quantity: Number,
-  description: String
+  profilePicture: String,
+  pictureid: {type:String, unique: true},
+  likeCount: Number,
+  filterid: String
 });
 
 var Item = mongoose.model('Item', itemSchema);
 
-var selectAll = function(callback) {
-  Item.find({}, function(err, items) {
-    if(err) {
-      callback(err, null);
-    } else {
-      callback(null, items);
-    }
-  });
-};
 
-module.exports.selectAll = selectAll;
+module.exports = Item;
