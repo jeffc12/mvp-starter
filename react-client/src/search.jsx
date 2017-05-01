@@ -41,12 +41,13 @@ class Search extends React.Component {
 
 
   onThisTag() {
+    console.log('passdowntoOntag', this.state.current);
     this.props.onTag(this.state.current);
   }
 
 
   render () {
-    console.log(this.state.current);
+    
 
     return (
     <div>

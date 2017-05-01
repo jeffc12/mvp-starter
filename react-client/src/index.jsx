@@ -4,15 +4,18 @@ import $ from 'jquery';
 import List from './components/List.jsx';
 import Search from './search.jsx';
 import Graph from './components/graph.jsx';
+import HistoryGraph from './components/History.jsx';
 import reactCSS from 'reactcss';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      items: []
+      items: [],
+      hist: []
     }
   var componentDidMount = this.componentDidMount.bind(this);
+  var HistoryDisplay = this.HistoryDisplay.bind(this);
   }
 
   componentDidMount() {
@@ -24,6 +27,20 @@ class App extends React.Component {
         this.setState({
           items: data
         })
+
+        $.ajax({
+          url: '/history',
+          type: 'GET',
+          success: (data) => {
+            console.log('GET SUCCESFUL', data);
+            this.setState({
+              hist: data
+            })
+          },
+          error: (err) => {
+            console.log('err', err);
+          }
+        });
       },
       error: (err) => {
         console.log('err', err);
@@ -31,6 +48,22 @@ class App extends React.Component {
     });
   }
 
+  HistoryDisplay() {
+    $.ajax({
+      url: '/history',
+      type: 'GET',
+      success: (data) => {
+        console.log('GET SUCCESFUL', data);
+        this.setState({
+          hist: data
+        })
+      },
+      error: (err) => {
+        console.log('err', err);
+      }
+    });
+
+  }
 
   Search(input) {
     var outside = this;
@@ -43,6 +76,7 @@ class App extends React.Component {
     })
     .done(function(data) {
       outside.componentDidMount();
+      
     console.log('POST Successful', data);
     })
     .fail(function(err) {
@@ -51,19 +85,23 @@ class App extends React.Component {
   }
 
   HistSearch(input) {
+    console.log('input',input);
+    var outside = this;
     $.ajax({
-    url: '/history/import',
+    url: '/history/imports',
     type: 'POST',
-    contentType: 'application/JSON',
-    data: JSON.stringify({tag: input})
+    contentType: 'application/json',
+    data: JSON.stringify({name: input})
     })
     .done(function(data) {
+      outside.componentDidMount();
     console.log('POST History Successful', data);
     })
     .fail(function(err) {
     console.error('POST History failed', data);
     })
   }
+
 
 
   render () {
@@ -98,6 +136,11 @@ class App extends React.Component {
       <h3>Like Count Chart By ID</h3>
       </div>
       <Graph bar={this.state.items}/>
+
+      <h3>Hashtag Chart by Hashtag</h3>
+
+      <HistoryGraph last={this.state.hist}/>
+
       </div>
 
 

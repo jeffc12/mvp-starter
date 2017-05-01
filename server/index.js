@@ -8,10 +8,12 @@ var ig = require('instagram-api');
 
 var app = express();
 
-app.use(bodyParser.urlencoded({ extended: true }))
+
 
 // UNCOMMENT FOR REACT
 app.use(express.static(__dirname + '/../react-client/dist'));
+
+app.use(bodyParser.json());
 
 // UNCOMMENT FOR ANGULAR
 // app.use(express.static(__dirname + '/../angular-client'));
@@ -78,14 +80,16 @@ app.get('/items', function (req, res) {
 app.post('/history/imports', function(req, res) {
   var accessToken = '3935105810.2bcdcc7.838c9a688ebf49979803bea8f43ef8d4';
   var igAPI = new ig(accessToken);
+console.log('in server',req.body.name);
 
-igAPI.tag(req.body.tag).then(function(result) {
+
+igAPI.getTag(req.body.name).then(function(result) {
 
   console.log('data from hashtag', result.data);
 
   var hist = new history({
-    hastag: result.data.tag,
-    count: result.data.count
+    hashtag: result.data.name,
+    count: result.data.media_count
   })
 
   hist.save(function(err,data) {
@@ -102,6 +106,21 @@ igAPI.tag(req.body.tag).then(function(result) {
   res.end()
 
 })
+
+
+app.get('/history', function (req, res) {
+  history.find({},(function(err, data) {
+    if(err) {
+      res.sendStatus(500);
+    } else {
+      console.log(data);
+      res.json(data);
+    }
+  })
+)
+});
+
+
 
 app.listen(3000, function() {
   console.log('listening on port 3000!');
