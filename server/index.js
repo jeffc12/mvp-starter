@@ -1,6 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-var items = require('../database-mongo');
+var items = require('../database-mongo/index');
+var history = require('../database-mongo/history')
 var requests = require('request');
 var ig = require('instagram-api');
 
@@ -16,6 +17,7 @@ app.use(express.static(__dirname + '/../react-client/dist'));
 // app.use(express.static(__dirname + '/../angular-client'));
 // app.use(express.static(__dirname + '/../node_modules'));
 
+// for TEST COLLECTION
 app.post('/items/import', function(req,res) {
 
   var accessToken = '3935105810.2bcdcc7.838c9a688ebf49979803bea8f43ef8d4';
@@ -71,6 +73,35 @@ app.get('/items', function (req, res) {
 )
 });
 
+
+//FOR HISTORY
+app.post('/history/imports', function(req, res) {
+  var accessToken = '3935105810.2bcdcc7.838c9a688ebf49979803bea8f43ef8d4';
+  var igAPI = new ig(accessToken);
+
+igAPI.tag(req.body.tag).then(function(result) {
+
+  console.log('data from hashtag', result.data);
+
+  var hist = new history({
+    hastag: result.data.tag,
+    count: result.data.count
+  })
+
+  hist.save(function(err,data) {
+    if(err) {
+      console.log('history was not saved');
+    } else {
+      console.log('history saved');
+    }
+
+  })
+
+})
+
+  res.end()
+
+})
 
 app.listen(3000, function() {
   console.log('listening on port 3000!');

@@ -49,14 +49,27 @@ class App extends React.Component {
     })
   }
 
+  HistSearch(input) {
+    $.ajax({
+    url: '/history/import',
+    type: 'POST',
+    contentType: 'application/JSON',
+    data: JSON.stringify({tag: input})
+    })
+    .done(function(data) {
+    console.log('POST History Successful', data);
+    })
+    .fail(function(err) {
+    console.error('POST History failed', data);
+    })
+  }
+
 
   render () {
     const styles = reactCSS({
     'default': {
       body0: {
-        background: '#F0FFF0',
         font: 'futura',
-        boxShadow: '0 2px 4px rgba(0,0,0,.15)',
 
       },
       title: {
@@ -70,16 +83,21 @@ class App extends React.Component {
 
 
     return (
-    <div style={styles.body0}>
-      <h1 style={styles.title}>NAME OF THIS APP</h1>
-      <h3>Search Hashtag</h3>
-      <Search onSearch={this.Search.bind(this)}/>
 
+    <div className="text-center" style={styles.body0}>
+      <div className="heading">COOL APP NAME HERE</div>
+      <br></br>
+      <h3>SEARCH A HASTAG YO</h3>
+      <Search onTag={this.HistSearch.bind(this)} onSearch={this.Search.bind(this)}/>
+
+      <div className="text-center">
       <List items={this.state.items}/>
 
+      </div>
+      </div>
 
 
-    </div>
+
   )
   }
 }

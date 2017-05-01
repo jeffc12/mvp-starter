@@ -1,12 +1,11 @@
 import React from 'react';
 
 const ListItem = (props) => (
-  <div>
-  <img src = {props.item.profilePicture.toString()}></img>
-  <li>The like Count: {props.item.likeCount}</li>
-  <li>Pictureid: {props.item.pictureid}</li>
-  <li>The Filter: {props.item.filterid}</li>
-  </div>
+  <tr>
+  <td>{props.item.pictureid}</td>
+  <td>{props.item.likeCount}</td>
+  <td>{props.item.filterid}</td>
+  </tr>
 )
 
 export default ListItem;

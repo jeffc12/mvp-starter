@@ -19,7 +19,7 @@ class Search extends React.Component {
 
 
   onThisSearch() {
-    this.props.onSearch(this.state.current);
+    this.props.onSearch();
   }
 
   dropDB() {
@@ -37,14 +37,19 @@ class Search extends React.Component {
     })
   }
 
+  onThisTag() {
+    this.props.onTag(this.state.current);
+  }
+
   render () {
     console.log(this.state.current);
 
     return (
     <div>
       <input type='text' value={this.state.current} onChange={this.onChange.bind(this)}></input>
-      <button onClick={this.onThisSearch.bind(this)}>Enter</button>
+      <button onClick={this.onThisTag.bind(this)}>Enter</button>
       <button onClick={this.dropDB.bind(this)}>Reset</button>
+      <button onClick={this.onThisSearch.bind(this)}>Display Yourself</button>
 
 
     </div>)
