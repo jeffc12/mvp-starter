@@ -22,6 +22,8 @@ class Search extends React.Component {
     this.props.onSearch();
   }
 
+
+
   dropDB() {
 
     $.ajax({
@@ -37,9 +39,11 @@ class Search extends React.Component {
     })
   }
 
+
   onThisTag() {
     this.props.onTag(this.state.current);
   }
+
 
   render () {
     console.log(this.state.current);

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import List from './components/List.jsx';
 import Search from './search.jsx';
+import Graph from './components/graph.jsx';
 import reactCSS from 'reactcss';
 
 class App extends React.Component {
@@ -87,13 +88,16 @@ class App extends React.Component {
     <div className="text-center" style={styles.body0}>
       <div className="heading">COOL APP NAME HERE</div>
       <br></br>
-      <h3>SEARCH A HASTAG YO</h3>
+      <h3>SEARCH A HASHTAG OR PEEP YOURSELF</h3>
       <Search onTag={this.HistSearch.bind(this)} onSearch={this.Search.bind(this)}/>
 
       <div className="text-center">
       <List items={this.state.items}/>
 
+
+      <h3>Like Count Chart By ID</h3>
       </div>
+      <Graph bar={this.state.items}/>
       </div>
 
 
